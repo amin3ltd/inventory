@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Inventory Management</title>
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -43,38 +43,33 @@
         </div>
 
         <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+          <li class="sidebar-list-item active">
+            <a href="#" onclick="showDashboard()">
               <span class="material-icons-outlined">dashboard</span> Dashboard
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="#" onclick="showProducts()">
               <span class="material-icons-outlined">inventory_2</span> Products
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
-              <span class="material-icons-outlined">fact_check</span> Inventory
-            </a>
-          </li>
-          <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="#" onclick="showOrders('purchase')">
               <span class="material-icons-outlined">add_shopping_cart</span> Purchase Orders
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="#" onclick="showOrders('sales')">
               <span class="material-icons-outlined">shopping_cart</span> Sales Orders
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
-              <span class="material-icons-outlined">poll</span> Reports
+            <a href="#" onclick="showCategories()">
+              <span class="material-icons-outlined">category</span> Categories
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="#" onclick="showSettings()">
               <span class="material-icons-outlined">settings</span> Settings
             </a>
           </li>
@@ -84,62 +79,235 @@
 
       <!-- Main -->
       <main class="main-container">
-        <div class="main-title">
-          <p class="font-weight-bold">DASHBOARD</p>
+        <!-- Dashboard View -->
+        <div id="dashboard-view">
+          <div class="main-title">
+            <p class="font-weight-bold">DASHBOARD</p>
+          </div>
+
+          <div class="main-cards">
+
+            <div class="card">
+              <div class="card-inner">
+                <p class="text-primary">PRODUCTS</p>
+                <span class="material-icons-outlined text-blue">inventory_2</span>
+              </div>
+              <span class="text-primary font-weight-bold" id="total-products">0</span>
+            </div>
+
+            <div class="card">
+              <div class="card-inner">
+                <p class="text-primary">PURCHASE ORDERS</p>
+                <span class="material-icons-outlined text-orange">add_shopping_cart</span>
+              </div>
+              <span class="text-primary font-weight-bold" id="purchase-orders">0</span>
+            </div>
+
+            <div class="card">
+              <div class="card-inner">
+                <p class="text-primary">SALES ORDERS</p>
+                <span class="material-icons-outlined text-green">shopping_cart</span>
+              </div>
+              <span class="text-primary font-weight-bold" id="sales-orders">0</span>
+            </div>
+
+            <div class="card">
+              <div class="card-inner">
+                <p class="text-primary">INVENTORY ALERTS</p>
+                <span class="material-icons-outlined text-red">notification_important</span>
+              </div>
+              <span class="text-primary font-weight-bold" id="inventory-alerts">0</span>
+            </div>
+
+          </div>
+
+          <div class="charts">
+
+            <div class="charts-card">
+              <p class="chart-title">Top 5 Products</p>
+              <div id="bar-chart"></div>
+            </div>
+
+            <div class="charts-card">
+              <p class="chart-title">Orders Overview</p>
+              <div id="area-chart"></div>
+            </div>
+
+          </div>
         </div>
 
-        <div class="main-cards">
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">PRODUCTS</p>
-              <span class="material-icons-outlined text-blue">inventory_2</span>
-            </div>
-            <span class="text-primary font-weight-bold">249</span>
+        <!-- Products View -->
+        <div id="products-view" style="display: none;">
+          <div class="main-title">
+            <p class="font-weight-bold">PRODUCTS</p>
+            <button class="btn-primary" onclick="showAddProductModal()">+ Add Product</button>
           </div>
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">PURCHASE ORDERS</p>
-              <span class="material-icons-outlined text-orange">add_shopping_cart</span>
-            </div>
-            <span class="text-primary font-weight-bold">83</span>
+          <div class="table-container">
+            <table id="products-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>SKU</th>
+                  <th>Category</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Min Stock</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody">
+              </tbody>
+            </table>
           </div>
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">SALES ORDERS</p>
-              <span class="material-icons-outlined text-green">shopping_cart</span>
-            </div>
-            <span class="text-primary font-weight-bold">79</span>
-          </div>
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">INVENTORY ALERTS</p>
-              <span class="material-icons-outlined text-red">notification_important</span>
-            </div>
-            <span class="text-primary font-weight-bold">56</span>
-          </div>
-
         </div>
 
-        <div class="charts">
-
-          <div class="charts-card">
-            <p class="chart-title">Top 5 Products</p>
-            <div id="bar-chart"></div>
+        <!-- Orders View -->
+        <div id="orders-view" style="display: none;">
+          <div class="main-title">
+            <p class="font-weight-bold" id="orders-title">ORDERS</p>
+            <button class="btn-primary" onclick="showAddOrderModal()">+ New Order</button>
           </div>
-
-          <div class="charts-card">
-            <p class="chart-title">Purchase and Sales Orders</p>
-            <div id="area-chart"></div>
+          <div class="table-container">
+            <table id="orders-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type</th>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Total Price</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="orders-tbody">
+              </tbody>
+            </table>
           </div>
-
         </div>
+
+        <!-- Categories View -->
+        <div id="categories-view" style="display: none;">
+          <div class="main-title">
+            <p class="font-weight-bold">CATEGORIES</p>
+            <button class="btn-primary" onclick="showAddCategoryModal()">+ Add Category</button>
+          </div>
+          <div class="table-container">
+            <table id="categories-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Created</th>
+                </tr>
+              </thead>
+              <tbody id="categories-tbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="settings-view" style="display: none;">
+          <div class="main-title">
+            <p class="font-weight-bold">SETTINGS</p>
+          </div>
+          <div class="settings-card">
+            <h3>API Configuration</h3>
+            <p>API Base URL: <span id="api-url"></span></p>
+            <button class="btn-secondary" onclick="testConnection()">Test Connection</button>
+          </div>
+        </div>
+
       </main>
       <!-- End Main -->
 
+    </div>
+
+    <!-- Modal for Add Product -->
+    <div id="product-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeProductModal()">&times;</span>
+        <h2>Add Product</h2>
+        <form id="product-form">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="product-name" required>
+          </div>
+          <div class="form-group">
+            <label>SKU</label>
+            <input type="text" id="product-sku" required>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="product-category" required>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" id="product-quantity" required>
+          </div>
+          <div class="form-group">
+            <label>Price</label>
+            <input type="number" step="0.01" id="product-price" required>
+          </div>
+          <div class="form-group">
+            <label>Min Stock</label>
+            <input type="number" id="product-min-stock" required>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="product-description"></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Add Order -->
+    <div id="order-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeOrderModal()">&times;</span>
+        <h2>New Order</h2>
+        <form id="order-form">
+          <div class="form-group">
+            <label>Order Type</label>
+            <select id="order-type" required>
+              <option value="purchase">Purchase Order</option>
+              <option value="sales">Sales Order</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Product</label>
+            <select id="order-product" required>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" id="order-quantity" required>
+          </div>
+          <button type="submit" class="btn-primary">Create Order</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Add Category -->
+    <div id="category-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeCategoryModal()">&times;</span>
+        <h2>Add Category</h2>
+        <form id="category-form">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="category-name" required>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="category-description"></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Save</button>
+        </form>
+      </div>
     </div>
 
     <!-- Scripts -->

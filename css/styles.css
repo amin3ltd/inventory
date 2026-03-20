@@ -102,28 +102,34 @@ body {
 }
 
 .sidebar-list-item {
-  padding: 20px 20px 20px 20px;
+  padding: 15px 20px 15px 20px;
+  transition: background 0.3s;
 }
 
 .sidebar-list-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
+}
+
+.sidebar-list-item.active {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-left: 3px solid #246dec;
 }
 
 .sidebar-list-item > a {
   text-decoration: none;
   color: #9799ab;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-list-item > a > span {
+  margin-right: 10px;
 }
 
 .sidebar-responsive {
   display: inline !important;
   position: absolute;
-  /*
-    the z-index of the ApexCharts is 11
-    we want the z-index of the sidebar higher so that
-    the charts are not showing over the sidebar 
-    on small screens
-  */
   z-index: 12 !important;
 }
 
@@ -139,6 +145,8 @@ body {
 .main-title {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .main-title > p {
@@ -222,6 +230,208 @@ body {
   justify-content: center;
   font-size: 22px;
   font-weight: 600;
+  margin-bottom: 20px;
+}
+
+
+/* ---------- TABLE ---------- */
+
+.table-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f8f9fa;
+}
+
+th {
+  text-align: left;
+  padding: 12px;
+  font-weight: 600;
+  color: #666666;
+  border-bottom: 2px solid #dee2e6;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-completed {
+  color: #367952;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #f5b74f;
+  font-weight: 600;
+}
+
+.status-cancelled {
+  color: #cc3c43;
+  font-weight: 600;
+}
+
+
+/* ---------- BUTTONS ---------- */
+
+.btn-primary {
+  background-color: #246dec;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #1a5bb8;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+  transition: transform 0.2s;
+}
+
+.btn-icon:hover {
+  transform: scale(1.2);
+}
+
+
+/* ---------- MODAL ---------- */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #ffffff;
+  margin: 5% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #666;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #246dec;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+
+/* ---------- SETTINGS ---------- */
+
+.settings-card {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 5px;
+  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+}
+
+.settings-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.settings-card p {
+  margin: 10px 0;
+}
+
+.settings-card span {
+  font-weight: 600;
+  color: #246dec;
 }
 
 
@@ -271,6 +481,10 @@ body {
   .sidebar-title > span {
     display: inline;
   }
+  
+  .main-cards {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Small <= 768px */
@@ -285,11 +499,25 @@ body {
     grid-template-columns: 1fr;
     margin-top: 30px;
   }
+  
+  .main-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .btn-primary {
+    width: 100%;
+  }
 }
 
 /* Extra Small <= 576px */
 @media screen and (max-width: 576px) {
   .header-left {
     display: none;
+  }
+  
+  .header-right {
+    gap: 10px;
   }
 }
