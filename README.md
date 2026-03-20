@@ -19,6 +19,10 @@ A full-stack inventory management application built with Go (Golang) backend and
 - **Router**: Gorilla Mux
 - **Charts**: ApexCharts
 
+## Dashboard Preview
+
+![Dashboard](images/maindhasboard.png)
+
 ## Project Structure
 
 ```
